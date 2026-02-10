@@ -1,3 +1,8 @@
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { appRoutes } from "@/presentation/routes";
+
+const router = createBrowserRouter(appRoutes);
+
 export default function App() {
-  return <p className="text-blue-500">Hello World</p>;
+  return <RouterProvider router={router} />;
 }
