@@ -26,7 +26,7 @@ export default function Breadcrumbs() {
   const breadcrumbs = getBreadcrumbs();
 
   return (
-    <nav className="flex items-center gap-3">
+    <nav className="flex items-center gap-3" data-testid="breadcrumbs">
       {breadcrumbs.map((crumb, index) => {
         const isLast = index === breadcrumbs.length - 1;
         const isActive = crumb.path === location.pathname;

@@ -12,12 +12,18 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "jsdom",
-    setupFiles: "./src/test/setup.ts",
+    setupFiles: "./src/config/test/setup.ts",
     css: true,
     coverage: {
       provider: "v8",
       include: ["src/**"],
-      exclude: ["src/main.tsx", "src/App.tsx", "src/test/**"],
+      exclude: [
+        "src/main.tsx",
+        "src/App.tsx",
+        "src/config/i18n/**",
+        "src/config/test/**",
+        "src/locales/**",
+      ],
       reporter: ["text", "json", "html"],
       reportsDirectory: "coverage",
       enabled: true,
