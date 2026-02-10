@@ -1,0 +1,11 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "home": "Home",
+    "detail": "Detail"
+  },
+  "products": {
+    "title": "Products",
+    "searchPlaceholder": "Search by brand or model..."
+  }
+}

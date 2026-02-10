@@ -1,6 +1,6 @@
 import { Route } from "react-router-dom";
-import ProductList from "./ProductList";
-import ProductDetail from "./ProductDetail";
+import ProductListPage from "./list/ProductListPage";
+import ProductDetailPage from "./detail/ProductDetailPage";
 import MainLayout from "@/presentation/shared/layouts/MainLayout";
 
 export class ProductRoutes {
@@ -10,8 +10,8 @@ export class ProductRoutes {
   static init = () => {
     return (
       <Route element={<MainLayout />}>
-        <Route path="/products" element={<ProductList />} />
-        <Route path="/products/:id" element={<ProductDetail />} />
+        <Route path="/products" element={<ProductListPage />} />
+        <Route path="/products/:id" element={<ProductDetailPage />} />
       </Route>
     );
   };
