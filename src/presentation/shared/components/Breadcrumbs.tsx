@@ -1,15 +1,23 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
+
+const isId = (segment: string): boolean => {
+  return !/^[a-z-]+$/i.test(segment);
+};
 
 export default function Breadcrumbs() {
   const location = useLocation();
+  const { t } = useTranslation();
 
   const getBreadcrumbs = () => {
     const paths = location.pathname.split("/").filter(Boolean);
     return [
-      { label: "Home", path: "/" },
+      { label: t("common.home"), path: "/" },
       ...paths.map((path, index) => ({
-        label: path.charAt(0).toUpperCase() + path.slice(1),
+        label: isId(path)
+          ? t("common.detail")
+          : path.charAt(0).toUpperCase() + path.slice(1),
         path: "/" + paths.slice(0, index + 1).join("/"),
       })),
     ];
