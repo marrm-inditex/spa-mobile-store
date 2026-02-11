@@ -26,7 +26,7 @@ export default function ProductDetailPage() {
   }
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-8" data-testid="product-detail-page">
       <Link
         to={ProductRoutes.list}
         className="text-stone-600 hover:underline"

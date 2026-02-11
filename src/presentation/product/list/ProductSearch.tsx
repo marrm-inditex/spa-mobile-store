@@ -7,6 +7,7 @@ export default function ProductSearch() {
 
   return (
     <input
+      data-testid="search-input"
       type="text"
       placeholder={t("products.searchPlaceholder")}
       value={searchTerm}

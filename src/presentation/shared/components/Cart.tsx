@@ -9,6 +9,7 @@ export default function Cart() {
       <span
         aria-label={`Cart items: ${itemsCount}`}
         className="absolute -top-2 -right-2 min-w-5 rounded-full bg-white p-0.5 text-center text-xs font-bold text-cyan-700 ring-1 ring-cyan-600"
+        data-testid="cart-badge"
       >
         {itemsCount}
       </span>
