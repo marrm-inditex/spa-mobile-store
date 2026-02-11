@@ -36,7 +36,7 @@ export const httpClient = {
   get: <T>(path: string, config?: RequestInit): Promise<T> =>
     fetchJson<T>(path, { ...config, method: "GET" }),
 
-  post: <T, U extends JsonValue>(
+  post: <T, U = Record<string, JsonValue>>(
     path: string,
     body: U,
     config?: RequestInit,
