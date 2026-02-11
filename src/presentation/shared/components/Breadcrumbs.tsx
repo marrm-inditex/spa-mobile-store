@@ -13,7 +13,6 @@ export default function Breadcrumbs() {
   const getBreadcrumbs = () => {
     const paths = location.pathname.split("/").filter(Boolean);
     return [
-      { label: t("common.home"), path: "/" },
       ...paths.map((path, index) => ({
         label: isId(path)
           ? t("common.detail")
@@ -38,7 +37,7 @@ export default function Breadcrumbs() {
               to={crumb.path}
               className={`text-sm uppercase ${
                 isActive
-                  ? "font-semibold text-stone-900 underline underline-offset-4"
+                  ? "font-semibold underline underline-offset-4"
                   : "text-stone-800 hover:text-stone-900 hover:underline hover:underline-offset-4"
               } ${isLast ? "pointer-events-none" : ""} `}
             >
