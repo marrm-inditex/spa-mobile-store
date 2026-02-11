@@ -4,6 +4,10 @@ import { Route, Routes } from "react-router-dom";
 import MainLayout from "./MainLayout";
 import { AppWrapper } from "@/config/test/utils";
 
+vi.mock("react-i18next", () => ({
+  useTranslation: () => ({ t: (key: string) => key }),
+}));
+
 describe("MainLayout", () => {
   it("renders the header with store name", () => {
     render(
