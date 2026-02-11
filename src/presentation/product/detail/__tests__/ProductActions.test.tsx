@@ -1,11 +1,16 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ProductActions from "../ProductActions";
 import type { Product } from "@/domain/product/types";
+import { useMutationAddToCart } from "@/services/cart/services";
 
 vi.mock("react-i18next", () => ({
   useTranslation: () => ({ t: (key: string) => key }),
+}));
+
+vi.mock("@/services/cart/services", () => ({
+  useMutationAddToCart: vi.fn(),
 }));
 
 const mockProduct: Product = {
@@ -38,6 +43,20 @@ const mockProduct: Product = {
 };
 
 describe("ProductActions", () => {
+  const useMutationAddToCartMock = vi.mocked(useMutationAddToCart);
+
+  const createMutationMock = (): ReturnType<typeof useMutationAddToCart> =>
+    ({
+      mutateAsync: vi.fn(),
+      mutate: vi.fn(),
+      isPending: false,
+    }) as unknown as ReturnType<typeof useMutationAddToCart>;
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+    useMutationAddToCartMock.mockReturnValue(createMutationMock());
+  });
+
   it("renders color and storage selectors", () => {
     render(<ProductActions product={mockProduct} />);
 
@@ -115,5 +134,53 @@ describe("ProductActions", () => {
 
     const storageSelect = screen.getByTestId("storage-select");
     expect(storageSelect).toHaveValue("1");
+  });
+
+  it("enables add to cart after selecting options and triggers mutation", async () => {
+    const user = userEvent.setup();
+    const mutationMock = createMutationMock();
+    useMutationAddToCartMock.mockReturnValue(mutationMock);
+
+    render(<ProductActions product={mockProduct} />);
+
+    const button = screen.getByTestId("add-to-cart-button");
+    const colorSelect = screen.getByTestId("color-select");
+    const storageSelect = screen.getByTestId("storage-select");
+
+    expect(button).toBeDisabled();
+
+    await user.selectOptions(colorSelect, "2");
+    await user.selectOptions(storageSelect, "3");
+
+    expect(button).not.toBeDisabled();
+
+    await user.click(button);
+
+    expect(mutationMock.mutateAsync).toHaveBeenCalledWith({
+      id: mockProduct.id,
+      colorCode: 2,
+      storageCode: 3,
+    });
+  });
+
+  it("keeps add to cart disabled while mutation is pending", async () => {
+    const user = userEvent.setup();
+    const mutationMock = {
+      ...createMutationMock(),
+      isPending: true,
+    } as ReturnType<typeof useMutationAddToCart>;
+
+    useMutationAddToCartMock.mockReturnValue(mutationMock);
+
+    render(<ProductActions product={mockProduct} />);
+
+    const button = screen.getByTestId("add-to-cart-button");
+    const colorSelect = screen.getByTestId("color-select");
+    const storageSelect = screen.getByTestId("storage-select");
+
+    await user.selectOptions(colorSelect, "2");
+    await user.selectOptions(storageSelect, "3");
+
+    expect(button).toBeDisabled();
   });
 });
