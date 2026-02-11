@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { ProductRepository } from "./product.repository";
-import type { ProductSummaryDTO } from "./product.dto";
-import type { ProductSummary } from "@/domain/product/types";
+import type { ProductSummaryDTO, ProductDTO } from "./product.dto";
+import type { ProductSummary, Product } from "@/domain/product/types";
 
 vi.mock("@/config/api/http", () => ({
   httpClient: {
@@ -12,6 +12,8 @@ vi.mock("@/config/api/http", () => ({
 import { httpClient } from "@/config/api/http";
 
 describe("ProductRepository", () => {
+  const repository = new ProductRepository();
+
   beforeEach(() => {
     vi.clearAllMocks();
   });
@@ -28,8 +30,6 @@ describe("ProductRepository", () => {
     ];
 
     vi.mocked(httpClient.get).mockResolvedValue(dto);
-
-    const repository = new ProductRepository();
     const result = await repository.getProducts();
 
     expect(httpClient.get).toHaveBeenCalledWith(ProductRepository.productEndpoint);
@@ -42,5 +42,53 @@ describe("ProductRepository", () => {
         price: 999,
       },
     ]);
+  });
+
+  it("fetches product detail by id and maps it using the adapter", async () => {
+    const dto: ProductDTO = {
+      id: "2",
+      brand: "Google",
+      imgUrl: "https://example.com/pixel.jpg",
+      model: "Pixel 8",
+      price: "799",
+      cpu: "Google Tensor G3",
+      ram: "8GB",
+      os: "Android 14",
+      displayResolution: "1080 x 2400 pixels",
+      battery: "4500 mAh",
+      primaryCamera: ["50 MP", "12 MP"],
+      secondaryCmera: ["10.8 MP"],
+      dimensions: "155.1 x 73.1 x 8.7 mm",
+      weight: "207 g",
+      options: {
+        colors: [],
+        storages: [],
+      },
+    };
+
+    vi.mocked(httpClient.get).mockResolvedValue(dto);
+    const result = await repository.getProduct("1");
+
+    expect(httpClient.get).toHaveBeenCalledWith("/api/product/1");
+    expect(result).toEqual<Product>({
+      id: "2",
+      brand: "Google",
+      imgUrl: "https://example.com/pixel.jpg",
+      model: "Pixel 8",
+      price: 799,
+      cpu: "Google Tensor G3",
+      ram: "8GB",
+      os: "Android 14",
+      displayResolution: "1080 x 2400 pixels",
+      battery: "4500 mAh",
+      primaryCamera: ["50 MP", "12 MP"],
+      secondaryCamera: ["10.8 MP"],
+      dimensions: "155.1 x 73.1 x 8.7 mm",
+      weight: "207 g",
+      options: {
+        colors: [],
+        storages: [],
+      },
+    });
   });
 });

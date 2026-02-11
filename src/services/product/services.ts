@@ -10,3 +10,11 @@ export const useGetProducts = () => {
     queryFn: () => repository.getProducts(),
   });
 };
+
+export const useGetProductDetail = (id: string) => {
+  return useQuery({
+    queryKey: [cacheKey, id],
+    queryFn: () => repository.getProduct(id),
+    enabled: !!id,
+  });
+};
