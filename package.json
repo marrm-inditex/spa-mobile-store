@@ -10,7 +10,9 @@
     "format": "prettier --write .",
     "preview": "vite preview",
     "prepare": "husky",
-    "test": "vitest"
+    "test": "vitest",
+    "e2e": "cypress open",
+    "e2e:ci": "cypress run"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
@@ -45,6 +47,7 @@
     "@vitejs/plugin-react": "^5.1.1",
     "@vitest/coverage-v8": "^4.0.18",
     "@vitest/ui": "^4.0.18",
+    "cypress": "^15.10.0",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.5",

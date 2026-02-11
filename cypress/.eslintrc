@@ -1,0 +1,10 @@
+{
+  "extends": ["../eslint.config.js"],
+  "env": {
+    "cypress/globals": true
+  },
+  "plugins": ["cypress"],
+  "rules": {
+    "@typescript-eslint/no-namespace": "off"
+  }
+}
