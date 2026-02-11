@@ -2,10 +2,27 @@
   "common": {
     "loading": "Loading...",
     "home": "Home",
-    "detail": "Detail"
+    "detail": "Detail",
+    "backToProducts": "Back to Products",
+    "pageNotFound": "Page Not Found"
   },
   "products": {
     "title": "Products",
-    "searchPlaceholder": "Search by brand or model..."
+    "searchPlaceholder": "Search by brand or model...",
+    "cpu": "Processor",
+    "ram": "RAM",
+    "os": "Operating System",
+    "display": "Display",
+    "battery": "Battery",
+    "primaryCamera": "Main Camera",
+    "secondaryCamera": "Front Camera",
+    "dimensions": "Dimensions",
+    "weight": "Weight",
+    "storage": "Storage",
+    "selectStorage": "Select storage option",
+    "color": "Color",
+    "selectColor": "Select color option",
+    "addToCart": "Add to Cart",
+    "noResults": "No products found"
   }
 }
