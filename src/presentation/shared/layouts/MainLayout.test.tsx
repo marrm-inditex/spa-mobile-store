@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, vi, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { Route, Routes } from "react-router-dom";
 import MainLayout from "./MainLayout";

@@ -1,6 +1,8 @@
 import { Link, Outlet } from "react-router-dom";
+import { Suspense } from "react";
 import Breadcrumbs from "@/presentation/shared/components/Breadcrumbs";
 import Cart from "@/presentation/shared/components/Cart";
+import Loading from "@/presentation/shared/components/Loading";
 
 export default function MainLayout() {
   return (
@@ -17,7 +19,9 @@ export default function MainLayout() {
         </div>
       </header>
       <main className="mx-auto w-full max-w-7xl p-6">
-        <Outlet />
+        <Suspense fallback={<Loading />}>
+          <Outlet />
+        </Suspense>
       </main>
     </div>
   );
