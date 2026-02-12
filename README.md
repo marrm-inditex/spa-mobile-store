@@ -1,73 +1,116 @@
-# React + TypeScript + Vite
+# 📱 Mobile Store SPA
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A single-page application for browsing and managing mobile phone products. Built with React, TypeScript, and following Clean Architecture principles.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Product list with search by brand and model
+- View detailed product specifications
+- Add products to cart with variant selection (color, storage)
 
-## React Compiler
+## 🛠️ Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Core:** React 19 • TypeScript 5.9 • Vite 7
+- **State & Data:** React Query (TanStack Query) • Zustand
+- **UI:** TailwindCSS 4 • React Router 7
+- **Testing:** Vitest • Testing Library • Cypress
+- **Code Quality:** ESLint 9 • Prettier • Husky + lint-staged
 
-## Expanding the ESLint configuration
+## ⚡ Quick Start
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Prerequisites
 
-```js
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
+- **Node.js** >= 18.x
+- **npm** >= 9.x (or yarn/pnpm)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Installation & Running
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+1. **Clone the repository**
+
+   ```bash
+   git clone <repository-url>
+   cd spa-mobile-store
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   npm install
+   ```
+
+3. **Configure environment** (optional)
+
+   The project uses a default API URL. To override it, create a `.env` file:
+
+   ```env
+   VITE_API_URL=https://itx-frontend-test.onrender.com
+   ```
+
+4. **Start development server**
+   ```bash
+   npm start
+   ```
+   The application will be available at `http://localhost:5173`
+
+## 📜 Available Scripts
+
+```bash
+# Development
+npm start                 # Start development server
+
+# Build & Preview
+npm run build            # Create production build
+npm run preview          # Preview production build locally
+
+# Testing
+npm run test             # Run unit tests in watch mode
+npm run e2e              # Open Cypress for E2E tests
+npm run e2e:ci           # Run E2E tests in headless mode
+
+# Code Quality
+npm run lint             # Lint code
+npm run format           # Format code
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 📁 Architecture & Project Structure
 
-```js
-// eslint.config.js
-import reactX from "eslint-plugin-react-x";
-import reactDom from "eslint-plugin-react-dom";
+This project follows **Clean Architecture** principles with clear separation of concerns:
 
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs["recommended-typescript"],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+### Layers
+
+- **Domain Layer** (`src/domain/`)
+  - Business entities, repository interfaces, and business rules
+  - Cart and Product domain models with type-safe contracts
+
+- **Infrastructure Layer** (`src/infrastructure/`)
+  - Concrete implementations of domain repository contracts
+  - API clients, DTOs, and adapters for data transformation
+  - Handles external service communication (REST API)
+
+- **Presentation Layer** (`src/presentation/`)
+  - React components organized by feature (product pages, shared components)
+  - Responsive design with TailwindCSS
+
+- **Services Layer** (`src/services/`)
+  - Bridges domain and presentation layers using React Query
+  - Custom hooks for data fetching and mutations
+  - Dependency injection containers for repositories
+
+## 💡 Technical Highlights
+
+### State Management
+
+- **React Query** for server state (products, API data)
+- **Zustand** for client state (cart, with persistence)
+- **React hooks** for local component state
+
+### Performance Optimizations
+
+- **Lazy Loading**: Route-based code splitting with `React.lazy()` and Suspense boundaries
+- **Image Loading**: Custom `ImageLoader` component with skeleton states to prevent Cumulative Layout Shift (CLS)
+- **Caching**: React Query with 1-hour stale time and localStorage persistence
+
+### Testing
+
+- **Unit Tests (Vitest)**: Component testing, repository adapters, and state management
+- **E2E Tests (Cypress)**: Product search/cart flows with page object pattern
