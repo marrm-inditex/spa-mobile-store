@@ -12,10 +12,10 @@ export default function ProductActions({ product }: ProductActionsProps) {
   const mutation = useMutationAddToCart();
 
   const [selectedColor, setSelectedColor] = useState<number | null>(
-    product.options.colors.length == 1 ? product.options.colors[0].code : null,
+    product.options.colors.length === 1 ? product.options.colors[0].code : null,
   );
   const [selectedStorage, setSelectedStorage] = useState<number | null>(
-    product.options.storages.length == 1 ? product.options.storages[0].code : null,
+    product.options.storages.length === 1 ? product.options.storages[0].code : null,
   );
 
   const onClick = () => {
