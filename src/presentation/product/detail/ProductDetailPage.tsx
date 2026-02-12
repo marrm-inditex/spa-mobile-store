@@ -6,6 +6,7 @@ import { useGetProductDetail } from "@/services/product/services";
 import ProductData from "./ProductData";
 import ProductActions from "./ProductActions";
 import NotFound from "@/presentation/shared/components/NotFound";
+import ImageLoader from "@/presentation/shared/components/ImageLoader";
 
 export default function ProductDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -35,10 +36,11 @@ export default function ProductDetailPage() {
         ← {t("common.backToProducts")}
       </Link>
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
-        <div className="relative aspect-square h-3/5 w-full max-w-sm overflow-hidden rounded-lg">
-          <img
+        <div>
+          <ImageLoader
             src={product.imgUrl}
             alt={`${product.brand} ${product.model}`}
+            containerClassName="relative aspect-square w-full max-w-sm overflow-hidden rounded-lg"
             className="h-full w-full object-contain"
           />
         </div>
